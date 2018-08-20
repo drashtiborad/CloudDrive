@@ -1,0 +1,9 @@
+flaskmod/config.py
+*.pyc
+migrations/
+.idea/
+*.jpg
+*.png
+*.jpeg
+*.gif
+*/.DS_Store
