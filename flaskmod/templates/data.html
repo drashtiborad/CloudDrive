@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+
+{% block content %}
+
+<legend class="border-bottom mb-4"> Welcome to Drive!!</legend>
+<div class="navbar-nav">
+    <a class="nav-item nav-link" href="{{ url_for('upload_file', path=path) }}">Upload</a>
+    <a class="nav-item nav-link" href="{{ url_for('create_folder', path=path) }}">Create Folder</a>
+</div>
+{% for file in files %}
+<article class="media content-section">
+    {% if file.type == 'dir' %}
+    <div class="media-body">
+        <h2><a class="article-title"
+               href="{{ url_for('data', path=file.parent_path.strip('/')+'/'+file.child_path +'/')}}">{{
+            file.child_path }}</a></h2>
+        <div class="article-metadata">
+            <a class="mr-2" href="#">{{ file.size }}</a>
+            <small class="text-muted">{{ file.type }}</small>
+            {% if not func(file.parent_path.strip('/')+'/'+file.child_path +'/') %}
+            <a class="mr-2" href="{{ url_for('delete', id=file.id) }}">Delete</a>
+            {% endif %}
+        </div>
+        {% else %}
+        <div class="media-body">
+            <h2><a class="article-title"
+                   href="{{ url_for('getfile', id = file.id) }}">{{
+                file.child_path }}</a></h2>
+            <div class="article-metadata">
+                <small class="text-muted">{{ file.size }}</small>
+                <small class="text-muted">{{ file.type }}</small>
+                <a class="mr-2" href="{{ url_for('delete', id=file.id) }}">Delete</a>
+
+            </div>
+            {% endif %}
+        </div>
+</article>
+{% endfor %}
+{% endblock content%}
+
